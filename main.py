@@ -1,4 +1,5 @@
 from funcs import *
+import os
 
 while True:
   DNAstart = False
@@ -6,7 +7,11 @@ while True:
   if 't' in sequence or 'T' in sequence:
       sequence = DNA2RNA(sequence)
       DNAstart = True
-  short = bool(int(input('1 for short, 0 for long\n> ')))
+
+  short = bool(input('True or False to shorthand'))
+
+  is_valid_sequence(sequence)
+
   if DNAstart: print('RNA Sequence,', sequence)
   result = get_amino_acid(sequence, short)
   print("Amino Acid sequence:", result)
