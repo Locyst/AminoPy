@@ -22,3 +22,14 @@ def DNA2RNA(sequence):
         else: raise ValueError("Invalid nucleotide: " + character)
     if len(return_str) != len(sequence): raise ValueError("Invalid DNA sequence length")
     return return_str
+
+def is_valid_sequence(sequence):
+    valid_nucleotides = {'A', 'T', 'C', 'G', 'U'}
+    valid = True
+    invalids = []
+    for nucleotide in sequence:
+        if nucleotide.upper() not in valid_nucleotides:
+            valid = False
+            invalids.append(nucleotide)
+    if valid: return True
+    else: raise ValueError("DNA sequence contains invalid characters, "+ ','.join(invalids))
