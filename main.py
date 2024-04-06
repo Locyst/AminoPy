@@ -1,13 +1,13 @@
 from random import choice
 
-from funcs import DNA2RNA, get_amino_acid, is_valid_sequence
+from funcs import DNA2RNA, get_amino_acid, is_valid_sequence, round_down_to_multiple
 from LocystSelection import Selection, basic_functions
 
 
 def short_select():
   options = {
-    'Shorthand. Example, Arg-Iso-Gly-Thr': basic_functions.true_function,
-    'Longhand. Exmaple, Arginine-Isoleucine-Glycine-Threonine': basic_functions.false_function,
+    'Shorthand. Example, Arg-Iso-Gly-Thr': basic_functions.return_true,
+    'Longhand. Exmaple, Arginine-Isoleucine-Glycine-Threonine': basic_functions.return_false,
   }
             
   selection = Selection("Would you like the Amino Acid names shortened or full? Use the character 'v' to move down and the character '^' to move up", **options)
@@ -44,12 +44,37 @@ def DNA_RNA2AMINO():
   if 'Unknown' in result: print('The Unknown amino acid could be result to you accidently inputting an extra character')
   input('Click enter to continue back to main screen\n')
 
+def ROUND_SELECT(original, amount):
+  def return_original(): return original
+  def return_amount(): return amount
+  message = f'The amount you entered, {original}, can be rounded down to {amount}. Would you like to do that?'
+  options = {
+    'Round down': return_original,
+    'Keep original': return_amount
+  }
+
+  selection = Selection(message, **options)
+
+  getting_selection = True
+  while getting_selection:
+    print(selection.get_message())
+    user_input = input("> ")
+    if user_input in ['v', '^']:
+        if user_input == 'v':
+            selection.move_curser(1)
+        elif user_input == '^':
+            selection.move_curser(-1)
+    elif not user_input:
+        getting_selection = False
+
+  return selection.run_at_cursor()
+
 def DNA_RNA_GENERATOR():
   print()
   question = 'Would you like to generate a random DNA or RNA sequence? Use the character "v" to move down and the character "^" to move up'
   options = {
-    "DNA": basic_functions.true_function,
-    "RNA": basic_functions.false_function
+    "DNA": basic_functions.return_true,
+    "RNA": basic_functions.return_false
   }
 
   selection = Selection(question, **options)
@@ -67,6 +92,12 @@ def DNA_RNA_GENERATOR():
         getting_selection = False
       
   amount = int(input('\nHow long do you want the sequence to be?\n> '))
+
+  rounded_amount = round_down_to_multiple(amount, 3)
+  if rounded_amount:
+    if ROUND_SELECT(amount, rounded_amount):
+      amount = rounded_amount
+
   if selection.run_at_cursor():
     print(''.join(choice('GACT') for i in range(amount)))
   else:

@@ -33,3 +33,15 @@ def is_valid_sequence(sequence):
             invalids.append(nucleotide)
     if valid: return True
     else: raise ValueError("DNA sequence contains invalid characters, "+ ','.join(invalids))
+
+def round_down_to_multiple(num, multiple):
+    print('rounding')
+    if (num / multiple).is_integer():
+        print('no need to round')
+        return None
+
+    while not (num / multiple).is_integer():
+        print('at ', num)
+        num -= 1
+
+    return num

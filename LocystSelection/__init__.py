@@ -2,9 +2,10 @@ class Option:
     def __init__(self, label, func):
         self.label = label
         self.function = func
+        if not callable(func): raise TypeError(f"The provided function, {func}, for Option class {label} is not callable")
         
-    def run(self):
-        return self.function()
+    def run(self, *args):
+        return self.function(*args) if args else self.function()
 
     def __repr__(self):
         return f'{self.label}: {self.function}'
@@ -39,16 +40,16 @@ class Selection:
         if self.cursor_pos == pos: return self.selected_icon
         return self.unselected_icon
     
-    def move_curser(self, amount):
-        new_cursor_pos = self.cursor_pos + amount
+    def move_curser(self, move_amount):
+        new_cursor_pos = self.cursor_pos + move_amount
         if -1 < new_cursor_pos < len(self.options):
             self.cursor_pos = new_cursor_pos
 
-    def run_at_cursor(self):
-        return self.run(self.cursor_pos)
+    def run_at_cursor(self, *args):
+        return self.run(self.cursor_pos, *args)
 
-    def run(self, pos):
-        return self.options[pos].run()
+    def run(self, pos, *args):
+        return self.options[pos].run(*args)
         
     def get_message(self):
         message = ' ' * self.question_indent_amount + self.message
