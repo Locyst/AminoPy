@@ -1,7 +1,8 @@
 from random import choice
 
 from funcs import DNA2RNA, get_amino_acid, is_valid_sequence, round_down_to_multiple
-from LocystSelection import Selection, basic_functions
+from LocystSelection import basic_functions
+from LocystSelection.Selection import Selection
 
 
 def short_select():
@@ -10,7 +11,7 @@ def short_select():
     'Longhand. Exmaple, Arginine-Isoleucine-Glycine-Threonine': basic_functions.return_false,
   }
             
-  selection = Selection("Would you like the Amino Acid names shortened or full? Use the character 'v' to move down and the character '^' to move up", **options)
+  selection = Selection(question="Would you like the Amino Acid names shortened or full? Use the character 'v' to move down and the character '^' to move up", **options)
 
   getting_selection = True
   while getting_selection:
@@ -47,13 +48,13 @@ def DNA_RNA2AMINO():
 def ROUND_SELECT(original, amount):
   def return_original(): return original
   def return_amount(): return amount
-  message = f'The amount you entered, {original}, can be rounded down to {amount}. Would you like to do that?'
+  question = f'The amount you entered, {original}, can be rounded down to {amount}. Would you like to do that?'
   options = {
     'Round down': return_original,
     'Keep original': return_amount
   }
 
-  selection = Selection(message, **options)
+  selection = Selection(message=question, **options)
 
   getting_selection = True
   while getting_selection:
@@ -77,7 +78,7 @@ def DNA_RNA_GENERATOR():
     "RNA": basic_functions.return_false
   }
 
-  selection = Selection(question, **options)
+  selection = Selection(message=question, **options)
 
   getting_selection = True
   while getting_selection:
@@ -126,7 +127,7 @@ if __name__ == '__main__':
       "GC Content": GC_CONTENT,
     }
 
-    selection = Selection(question, **options)
+    selection = Selection(message=question, **options)
 
     getting_selection = True
     while getting_selection:

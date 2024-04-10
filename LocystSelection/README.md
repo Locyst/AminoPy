@@ -14,29 +14,26 @@ LocystSelection is a Python library that provides a flexible selection interface
 from LocystSelection import Selection
 import os
 
-def Add(x, y):
-  return x + y
-
-def Sub(x, y):
-  return x - y
-
-def Times(x, y):
-  return x * y
-
-def Div(x, y):
-  return x / y
-
-def test2():
-  input('test2')
-
-def test4():
-  input('test4')
-
-options = {'Addition': Add, 'Subtraction': Sub, 'Multiplication': Times, 'divide': Div}
-
 # Create a selection menu
-operation_selection = Selection('What operation would you like to perform for x: 1 and y: 1? Use ^ to go up and v to go down',
-                                **options)
+operation_selection = Selection.Selection(message='What operation would you like to perform for x: 1 and y: 1? Use ^ to go up and v to go down')
+
+@operation_selection.option(name='Addition')
+def Add(x, y):   return x + y
+
+@operation_selection.option(name='Subtraction')
+def Sub(x, y):   return x - y
+
+@operation_selection.option(name='Multiply')
+def Times(x, y): return x * y
+
+@operation_selection.option(name='Divide')
+def Div(x, y):   return x / y
+
+@operation_selection.option()
+def test2(): input('test2')
+
+@operation_selection.option()
+def test4(): input('test4')
 
 # Interact with the selection menu
 getting_input = True
@@ -48,6 +45,7 @@ while getting_input:
     user_input = input("> ")
     if not user_input:
         getting_input = False
+        
         print(operation_selection.run_at_cursor(x, y))
 
     elif user_input == "^":
