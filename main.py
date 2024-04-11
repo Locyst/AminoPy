@@ -1,7 +1,8 @@
 from random import choice
+import os
 
 from funcs import DNA2RNA, get_amino_acid, is_valid_sequence, round_down_to_multiple
-from LocystSelection import basic_functions
+from LocystSelection import basic_functions, UP_ARROW, DOWN_ARROW
 from LocystSelection.Selection import Selection
 
 
@@ -11,19 +12,23 @@ def short_select():
     'Longhand. Exmaple, Arginine-Isoleucine-Glycine-Threonine': basic_functions.return_false,
   }
             
-  selection = Selection(question="Would you like the Amino Acid names shortened or full? Use the character 'v' to move down and the character '^' to move up", **options)
+  selection = Selection(question="Would you like the Amino Acid names shortened or full? Use the arrow keys and click enter to select your option", **options)
 
-  getting_selection = True
-  while getting_selection:
-    print(selection.get_message())
-    user_input = input("> ")
-    if user_input in ['v', '^']:
-        if user_input == 'v':
-            selection.move_curser(1)
-        elif user_input == '^':
-            selection.move_curser(-1)
-    elif not user_input:
-        getting_selection = False
+  args = None
+  while True:
+      os.system('clear')
+      print(selection.get_message())
+      user_input = input("> ")
+      if not user_input:        
+          print(selection.run_at_cursor(*args))
+          break
+
+      elif user_input == UP_ARROW:
+          selection.move_curser(move_amount=-1)
+      elif user_input == DOWN_ARROW:
+          selection.move_curser(move_amount=1)
+      else:
+          print('invalid choice')
 
   return selection.run_at_cursor()
 
@@ -56,17 +61,21 @@ def ROUND_SELECT(original, amount):
 
   selection = Selection(message=question, **options)
 
-  getting_selection = True
-  while getting_selection:
-    print(selection.get_message())
-    user_input = input("> ")
-    if user_input in ['v', '^']:
-        if user_input == 'v':
-            selection.move_curser(1)
-        elif user_input == '^':
-            selection.move_curser(-1)
-    elif not user_input:
-        getting_selection = False
+  args = None
+  while True:
+      os.system('clear')
+      print(selection.get_message())
+      user_input = input("> ")
+      if not user_input:        
+          print(selection.run_at_cursor(*args))
+          break
+
+      elif user_input == UP_ARROW:
+          selection.move_curser(move_amount=-1)
+      elif user_input == DOWN_ARROW:
+          selection.move_curser(move_amount=1)
+      else:
+          print('invalid choice')
 
   return selection.run_at_cursor()
 
@@ -80,17 +89,21 @@ def DNA_RNA_GENERATOR():
 
   selection = Selection(message=question, **options)
 
-  getting_selection = True
-  while getting_selection:
-    print(selection.get_message())
-    user_input = input("> ")
-    if user_input in ['v', '^']:
-        if user_input == 'v':
-            selection.move_curser(1)
-        elif user_input == '^':
-            selection.move_curser(-1)
-    elif not user_input:
-        getting_selection = False
+  args = None
+  while True:
+      os.system('clear')
+      print(selection.get_message())
+      user_input = input("> ")
+      if not user_input:        
+          print(selection.run_at_cursor(*args))
+          break
+
+      elif user_input == UP_ARROW:
+          selection.move_curser(move_amount=-1)
+      elif user_input == DOWN_ARROW:
+          selection.move_curser(move_amount=1)
+      else:
+          print('invalid choice')
       
   amount = int(input('\nHow long do you want the sequence to be?\n> '))
 
@@ -120,7 +133,7 @@ def GC_CONTENT():
 
 if __name__ == '__main__':
   while True:
-    question = "WHat would you like to do? Use the character 'v' to move down and the character '^' to move up"
+    question = "WHat would you like to do? Use the arrow keys and click enter to select your option"
     options = {
       "DNA/RNA to Amino Acid": DNA_RNA2AMINO,
       "Random DNA/RNA Sequence Generator": DNA_RNA_GENERATOR,
@@ -129,16 +142,20 @@ if __name__ == '__main__':
 
     selection = Selection(message=question, **options)
 
-    getting_selection = True
-    while getting_selection:
-      print(selection.get_message())
-      user_input = input("> ")
-      if user_input in ['v', '^']:
-          if user_input == 'v':
-              selection.move_curser(1)
-          elif user_input == '^':
-              selection.move_curser(-1)
-      elif not user_input:
-          getting_selection = False
+    args = None
+    while True:
+        os.system('clear')
+        print(selection.get_message())
+        user_input = input("> ")
+        if not user_input:        
+            print(selection.run_at_cursor(*args))
+            break
+
+        elif user_input == UP_ARROW:
+            selection.move_curser(move_amount=-1)
+        elif user_input == DOWN_ARROW:
+            selection.move_curser(move_amount=1)
+        else:
+            print('invalid choice')
 
     selection.run_at_cursor()
