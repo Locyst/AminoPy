@@ -8,4 +8,4 @@
 ## Fixed a bug that allowed functions that could not take args to take them
 ####################
 
-__version__ = "0.0.5"
+__version__ = "0.0.3"
