@@ -20,7 +20,7 @@ def DNA2RNA(sequence):
         elif character.lower() == 'a': return_str += 'U'
         elif character.lower() == 'c': return_str += 'G'
         else: raise ValueError("Invalid nucleotide: " + character)
-    if len(return_str) != len(sequence): raise ValueError("Invalid DNA sequence length")
+    if len(return_str) != len(sequence): raise ValueError("Invalid DNA sequence length when transfering over to RNA")
     return return_str
 
 def is_valid_sequence(sequence):
@@ -35,9 +35,7 @@ def is_valid_sequence(sequence):
     else: raise ValueError("DNA sequence contains invalid characters, "+ ','.join(invalids))
 
 def round_down_to_multiple(num, multiple):
-    print('rounding')
     if (num / multiple).is_integer():
-        print('no need to round')
         return None
 
     while not (num / multiple).is_integer():
